@@ -10,26 +10,37 @@ namespace ConsoleApp1
         {
             colores();
             
-            Console.WriteLine();
+            Console.ReadKey();
         }
 
-        
 
 
+        public static void CreacionDEarreglos(int tamaño, int[] miarreglo)
+        {
+            /*
+            int tamaño = 0;
+            Console.Write("\nIndique el Tamaño del Arreglo: ");
+            tamaño = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+            //declarar y crear el arreglo
+            int[] miarreglo = new int[tamaño];
+            //asignar datos
+            CreacionDEarreglos(tamaño, miarreglo);
+            */
+            for (int i = 0; i < tamaño; i++)
+            {
+                Console.Write("miarreglo[" + i + "] = ");
+                miarreglo[i] = int.Parse(Console.ReadLine());
+            }
+            //visualizar los elementos del arreglo
+            Console.Write("\nElementos del arreglo\n");
+            Console.WriteLine();
+            for (int i = 0; i < tamaño; i++)
+            {
+                Console.Write(miarreglo[i] + " ");
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
         public static long SumaDesendente(long nn1)
         {
             /*
@@ -555,7 +566,6 @@ namespace ConsoleApp1
                 }
             }
         }
-
         public static String decimalHexadecimal(int numero)
         {
 
@@ -871,8 +881,5 @@ namespace ConsoleApp1
             }
             return Octal;
         }
-       
-        
-
     }
 }
