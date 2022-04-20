@@ -9,12 +9,77 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            
+            MenuQueOperaArreglos();
             Console.ReadKey();
         }
-
-
-
+        public static void MenuQueOperaArreglos()
+        {
+            int[] A, B, C;
+            int tamaño = 0, numeroM = 0,opcion=0;
+            Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
+            Console.Write("\nIndique el Tamaño de los arreglos en general: ");
+            tamaño = int.Parse(Console.ReadLine());
+            
+            Console.Write("\n1. Llenar Vector A de manera aleatoria." +
+                "\n2.Llenar Vector B de manera aleatoria." +
+                "\n3.Realizar C = A + B." +
+                "\n4.Realizar C = B - A." +
+                "\n5.Mostrar(Permitiendo al usuario elegir entre el Vector A, B, o C)." +
+                "\n6.Salir.\n\n" +
+                "\nQue opcion eliges ? ..... ");
+            opcion = int.Parse(Console.ReadLine());
+            switch (opcion)
+            {
+                case 1:
+                    A = new int[tamaño];
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Random rnd = new Random();
+                        int NumerosAleatorios = rnd.Next(-100, 100);
+                        A[i] = NumerosAleatorios;  
+                    }
+                    Console.Write("El arreglo Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(A[i] + " ");
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Opcion no valida");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+        public static void CreacionDEarreglosConMultiplos(int tamaño, int numeroM, int[] miarreglo)
+        {
+            /*
+            int tamaño = 0,numeroM = 0;
+            Console.Write("\nIndique el numero al cual le encontraremos los multiplos: ");
+            numeroM = int.Parse(Console.ReadLine());
+            Console.Write("\nIndique el Tamaño del Arreglo que tendra la cantidad de multiplos del numero: ");
+            tamaño = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+            //declarar y crear el arreglo
+            int[] miarreglo = new int[tamaño];
+            //asignar datos
+            CreacionDEarreglosConMultiplos(tamaño, numeroM, miarreglo);
+            */
+            int numeroAmultiplicar = 1;
+            for (int i = 0; i < tamaño; i++)
+            {
+                int multiplo;
+                multiplo = numeroM * numeroAmultiplicar;
+                miarreglo[i] = multiplo;
+                numeroAmultiplicar++;
+            }
+            //visualizar los elementos del arreglo
+            Console.Write("\nElementos del arreglo de multiplos\n");
+            Console.WriteLine();
+            for (int i = 0; i < tamaño; i++)
+            {
+                Console.Write(miarreglo[i] + " ");
+            }
+        }
         public static void CreacionDEarreglos(int tamaño, int[] miarreglo)
         {
             /*
@@ -39,7 +104,6 @@ namespace ConsoleApp1
             {
                 Console.Write(miarreglo[i] + " ");
             }
-
         }
         public static long SumaDesendente(long nn1)
         {
