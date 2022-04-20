@@ -9,70 +9,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            /*
-            string hex_valor = "2CF";
-            int int_valor = Convert.ToInt32(hex_valor, 16);
-            Console.WriteLine("numero hexadecimal = {0}", hex_valor);
-            Console.WriteLine("numero decimal = {0}", int_valor);
-            Console.ReadLine();
-            int hexadecimalDecimal(String hexadecimal)
-            {
-                int result = 0;
-                int contar = hexadecimal.Length - 1;
-                for (int i = 0; i < hexadecimal.Length; i++)
-                {
-                    int conversion = 0;
-                    switch (hexadecimal[i])
-                    {
-                        case 'A': conversion = 10; break;
-                        case 'B': conversion = 11; break;
-                        case 'C': conversion = 12; break;
-                        case 'D': conversion = 13; break;
-                        case 'E': conversion = 14; break;
-                        case 'F': conversion = 15; break;
-                        default: conversion = -48 + (int)hexadecimal[i]; break; // -48 because of ASCII
-                    }
-                    result += conversion * (int)(Math.Pow(16, contar));
-                    contar--;
-                }
-                return result;
-            }
-            */
-            string hexadecimal = "2CF";
-            int numero = 0;
-            int j = 0;
-
-            const int DIVISOR = 16;
-
-            for (int i = 0; i < hexadecimal.Length; i++)
-            {
-
-                
-                
-                if (hexadecimal[i] >= '0' && hexadecimal[i] <= '9')
-                {
-                    j = hexadecimal.Length - 1;
-                    numero += (int)Math.Pow(DIVISOR, j) * Convert.ToInt32(hexadecimal[i] + "");
-                    j--;
-                }
-                else if (hexadecimal[i] >= 'A' && hexadecimal[i] <= 'F')
-                {
-                    j = hexadecimal.Length - 1;
-                    numero += (int)Math.Pow(DIVISOR, j) * Convert.ToInt32((hexadecimal[i] - 'A' + 10) + "");
-                    j--;
-                }
-                else
-                {
-                    numero = numero - 1;
-                }
-                
-
-            }
-
-          
-
-
-            Console.WriteLine(numero);
+            
+            Console.WriteLine();
         }
 
         
