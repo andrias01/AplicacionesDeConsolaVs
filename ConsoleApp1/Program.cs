@@ -15,7 +15,7 @@ namespace ConsoleApp1
         public static void MenuQueOperaArreglos()
         {
             int[] A, B, C;
-            int tamaño = 0, numeroM = 0,opcion=0;
+            int tamaño = 0,opcion=0;
             Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
             Console.Write("\nIndique el Tamaño de los arreglos en general: ");
             tamaño = int.Parse(Console.ReadLine());
@@ -42,6 +42,34 @@ namespace ConsoleApp1
                     for (int i = 0; i < tamaño; i++)
                     {
                         Console.Write(A[i] + " ");
+                    }
+                    break;
+                case 2:
+                    B = new int[tamaño];
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Random rnd = new Random();
+                        int NumerosAleatorios = rnd.Next(-100, 100);
+                        B[i] = NumerosAleatorios;
+                    }
+                    Console.Write("El arreglo Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(B[i] + " ");
+                    }
+                    
+                    break;
+                case 3:
+                    
+                    C = new int[tamaño];
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        //C[i] = A[i]+ B[i];
+                    }
+                    Console.Write("El arreglo Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(C[i] + " ");
                     }
                     break;
                 default:
