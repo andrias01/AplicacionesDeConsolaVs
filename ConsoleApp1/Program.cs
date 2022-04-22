@@ -14,69 +14,97 @@ namespace ConsoleApp1
         }
         public static void MenuQueOperaArreglos()
         {
-            int[] A, B, C;
+            int[] A= { }, B= { }, C= { };
             int tamaño = 0,opcion=0;
             Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
             Console.Write("\nIndique el Tamaño de los arreglos en general: ");
             tamaño = int.Parse(Console.ReadLine());
-            
-            Console.Write("\n1. Llenar Vector A de manera aleatoria." +
+            static void menu()
+            {
+                Console.Write("\n1. Llenar Vector A de manera aleatoria." +
                 "\n2.Llenar Vector B de manera aleatoria." +
                 "\n3.Realizar C = A + B." +
                 "\n4.Realizar C = B - A." +
                 "\n5.Mostrar(Permitiendo al usuario elegir entre el Vector A, B, o C)." +
                 "\n6.Salir.\n\n" +
-                "\nQue opcion eliges ? ..... ");
+                "\nQue opcion eliges ? ..... ");  
+            }
+            menu();
             opcion = int.Parse(Console.ReadLine());
-            switch (opcion)
+
+            static int[] vertorRandom(int tamaño)
             {
-                case 1:
-                    A = new int[tamaño];
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Random rnd = new Random();
-                        int NumerosAleatorios = rnd.Next(-100, 100);
-                        A[i] = NumerosAleatorios;  
-                    }
-                    Console.Write("El arreglo Queda asi: ");
+                int[] Vect = new int[tamaño];
+                for (int i = 0; i < tamaño; i++)
+                {
+                    Random rnd = new Random();
+                    int NumerosAleatorios = rnd.Next(-100, 100);
+                    Vect[i] = NumerosAleatorios;
+                }
+                return Vect;
+            }
+            do
+            {
+                if (opcion == 1)
+                {
+                    A = vertorRandom(tamaño);
+                    Console.Write("El arreglo 'A' ya se creo, Queda asi: ");
                     for (int i = 0; i < tamaño; i++)
                     {
                         Console.Write(A[i] + " ");
                     }
-                    break;
-                case 2:
-                    B = new int[tamaño];
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Random rnd = new Random();
-                        int NumerosAleatorios = rnd.Next(-100, 100);
-                        B[i] = NumerosAleatorios;
-                    }
-                    Console.Write("El arreglo Queda asi: ");
+                    Console.Write("\n\n\n\n");
+                    menu();
+                    opcion = int.Parse(Console.ReadLine());
+                }
+                if (opcion == 2)
+                {
+                    B = vertorRandom(tamaño);
+                    Console.Write("El arreglo 'B' ya se creo, Queda asi: ");
                     for (int i = 0; i < tamaño; i++)
                     {
                         Console.Write(B[i] + " ");
                     }
-                    
-                    break;
-                case 3:
-                    
-                    C = new int[tamaño];
-                    for (int i = 0; i < tamaño; i++)
+                    Console.Write("\n\n\n\n");
+                    menu();
+                    opcion = int.Parse(Console.ReadLine());
+                    do
                     {
-                        //C[i] = A[i]+ B[i];
-                    }
-                    Console.Write("El arreglo Queda asi: ");
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Console.Write(C[i] + " ");
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Opcion no valida");
-                    Console.ReadKey();
-                    break;
-            }
+                        if (opcion == 3)
+                        {
+                            C = new int[tamaño];
+                            for (int i = 0; i < tamaño; i++)
+                            {
+                                C[i] = A[i] + B[i];
+                            }
+                            Console.Write("El arreglo 'C' = 'A' + 'B' ya se creo, Queda asi: ");
+                            for (int i = 0; i < tamaño; i++)
+                            {
+                                Console.Write(C[i] + " ");
+                            }
+                            Console.Write("\n\n\n\n");
+                            menu();
+                            opcion = int.Parse(Console.ReadLine());
+                        }
+                        if (opcion == 4)
+                        {
+                            C = new int[tamaño];
+                            for (int i = 0; i < tamaño; i++)
+                            {
+                                C[i] = A[i] - B[i];
+                            }
+                            Console.Write("El arreglo 'C' = 'A' - 'B' ya se creo, Queda asi: ");
+                            for (int i = 0; i < tamaño; i++)
+                            {
+                                Console.Write(C[i] + " ");
+                            }
+                            Console.Write("\n\n\n\n");
+                            menu();
+                            opcion = int.Parse(Console.ReadLine());
+                        }
+                    } while (opcion == 3 || opcion == 4);
+                }
+            } while (opcion == 1|| opcion == 2|| opcion == 5|| opcion == 6);
         }
         public static void CreacionDEarreglosConMultiplos(int tamaño, int numeroM, int[] miarreglo)
         {
