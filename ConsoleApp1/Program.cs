@@ -9,11 +9,162 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            MenuQueOperaArreglos();
+            JuegoAhorcado();
             Console.ReadKey();
         }
+        public static void JuegoAhorcado()
+        {
+            bool juegoActivo = true;
+            string palabra = "" ;
+            int vidas = 3;
+            string letra = "";
+            int correctas = 0;
+            int contador = 0;
+            char letraPorCaracter = ' ';
+            string volverAjugar = "";
+            mensajeBienvenida();
+            while (juegoActivo == true)
+            {
+                int contador2 = 1, contador3 = 0;//Contador2 inicia en uno porque es el tamaño del vector de las letras usadas
+                //contador3 es la pocision de las letras usadas
+                char[] matrizLetrasUsadas,valoresUsados= { };//Estas son las matrices para poner las letras usadas
+                valoresUsados = new char[20];//Creo la matriz valoresUsados con 20 posiciones
+                palabra = PalabraAleatoria(palabra);
+                char[] PalabraEnVector = palabra.ToCharArray();
+                LimpiarPantalla();
+                char[] EspaciosConGuiones = new char[palabra.Length];
+                for (int i = 0; i < palabra.Length; i++)//Este for rellena el vector con '_' y deja un espacio entre ellos
+                    if (palabra[i]==' ')
+                    {
+                        EspaciosConGuiones[i] = ' ';
+                    }
+                    else
+                    EspaciosConGuiones[i] = '_';
+                correctas = 0;
+                //Momento repetitivo while
+                while (vidas >= 1)//Mientras las vidas sean mayores o iguales a uno
+                {
+                    matrizLetrasUsadas = new char[contador2];//se crea la matriz donde se pontran las letras usadas
+                    bool siLaLetraEsMayorAuno = true;//Este valor cambiara cuando el usuario introdusca mas de un caracter
+                    Console.WriteLine("LETRAS USADAS:                VIDAS ACTUALES: {0}            CORRECTAS: {1}",vidas,correctas);
+                    for (int i = 0; i < contador3; i++) //Marcador de informacion de las letras usadas
+                    {
+                        matrizLetrasUsadas[i] = valoresUsados[i];
+                        Console.WriteLine("Letra numero {0} ", i + "= " + "'" + matrizLetrasUsadas[i] + "'");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("Palabra a encontrar: ");
+                    MostrarEspaciosEnBlanco(EspaciosConGuiones);
+                    while (siLaLetraEsMayorAuno == true)//Empieza el while en true
+                    {
+                        Console.Write("\n ");
+                        Console.Write("Escribe una letra: ");
+                        letra = Console.ReadLine();
+                        LimpiarPantalla();
+                        if (letra.Length > 1)//si el usuario introduce mas de un caracter, sale un mensaje de error
+                        {
+                            Console.WriteLine("!!!Solo debes poner una letra a la vez intenta denuevo¡¡¡ (Pon un espacio para continuar)");
+                            Console.ReadKey();
+                            siLaLetraEsMayorAuno = false;//Se deja de ejecutar el while
+                        }
+                        else//Si introdujo un caracter (una letra) 
+                        {
+                            letraPorCaracter = Convert.ToChar(letra);//Se guarda en letrasPorCaracter
+                            valoresUsados[contador3] = letraPorCaracter;//Se guarda en el vectorUsados en la pocion del contador3
+                            siLaLetraEsMayorAuno = false; //Se deja de ejecutar el while
+                        }
+                    }
+                    for (int i = 0; i < EspaciosConGuiones.Length; i++)//For que analiza si ya esta la letra que se coloco
+                    {
+                        if (letraPorCaracter == EspaciosConGuiones[i])
+                        {
+                            Console.WriteLine("Esa letra ya esta!! Escribe otra  (Pon un espacio para continuar)");
+                            Console.ReadKey();
+                            contador++;//el contador suma una para no restar una vida
+                        }
+                        else
+                        {
+                            if (letraPorCaracter == PalabraEnVector[i])//si no esta repetida la letra ponerla en su posicion
+                            {
+                                EspaciosConGuiones[i] = letraPorCaracter;
+                                contador++; //Contador suma una para no restar una vida 
+                                correctas++;//Correctas suma la cantidad de veces que hay de cada letra
+                            }
+                        }
+                    }
+                    if (contador == 0)//Para quitar la vida
+                    {
+                        vidas--;
+                    }
+                    if (correctas == palabra.Length) //Si la cantidad de correctas es la cantidad de letras que hay en la palabra
+                        break; //No hacer nada
+                    else 
+                        contador = 0;//Pero ponerme el valor de contador en cero para continuar jugando
+                    contador2++;
+                    contador3++;
+                }
+                if (correctas == palabra.Length)//Si son iguales la cantidad de letras de la palabra y la cantidad de letras correctas
+                {
+                    MostrarEspaciosEnBlanco(EspaciosConGuiones);//se muestra la palabra oculta
+                    Console.WriteLine();//Ganastes el juego
+                    Console.WriteLine("Lo lograste la palabra es {0} ganaste!! quieres volver a jugar : S / N", palabra);
+                    volverAjugar = Console.ReadLine();
+                    if (volverAjugar == "n" || volverAjugar == "N") 
+                        juegoActivo = false;
+                    else 
+                        vidas = 3;//Si el usuario dice que si vidas es igual a 3 y el while reinicia
+                }
+                else
+                {
+                    Console.WriteLine("Ya no tines mas intentos el juego TERMINO la palabra era {0} quieres juegar de nuevo : S /  N", palabra);
+                    volverAjugar = Console.ReadLine();
+                    if (volverAjugar == "n" || volverAjugar == "N") 
+                        juegoActivo = false;
+                    else 
+                        vidas = 3;//Si el usuario dice que si vidas es igual a 3 y el while reinicia
+                }
+            }
+            static void LimpiarPantalla()
+            {
+                Console.Clear();
+                mensajeBienvenida();
+                Console.WriteLine();
+            }//Modulo que limpia y pone el menu
+            static void mensajeBienvenida()
+            {
+                Console.Write("\n***************BIENVENIDO AL JUEGO EL AHORCADO POR CONSOLA***************\n\n" +
+                "\n************REGLAS DEL JUEGO************" +
+                "\n***1.Escribir solo una letra por intento***" +
+                "\n***2.Solo tienes TRES vidas             ***\n\n" +
+                "\n-------PALABRA GENERADA 'A JUGAAAAR'-------\n");
+            }//Menu de bienvenida
+            static string PalabraAleatoria(string palabra)
+            {
+                string[] palabras = new string[16] { "camion", "computador", "leche", "jhohann", "vaca", "juan", "santiago", "universidad", "hermoza", "novia", "tarro", "perro", "daniela", "internet", "codigo", "programacion" };
+                Random NumeroAleatorio = new Random();
+                palabra = palabras[NumeroAleatorio.Next(16)];
+                return palabra;
+            }//Modulo que escoje la palabra aleatoria
+            static void MostrarEspaciosEnBlanco(char[] Espacios)
+            {
+                for (int i = 0; i < Espacios.Length; i++)
+                {
+                    Console.Write(Espacios[i] + " ");
+                }
+            }//Modulo que pones los espacios en blanco entre guines
+        }
+
+
+
+
+
+
+
+
+        
         public static void MenuQueOperaArreglos()
         {
+            string letra,letra2;
             int[] A= { }, B= { }, C= { };
             int tamaño = 0,opcion=0;
             Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
@@ -29,6 +180,15 @@ namespace ConsoleApp1
                 "\n6.Salir.\n\n" +
                 "\nQue opcion eliges ? ..... ");  
             }
+            static void menu2()
+            {
+                Console.Write("\nELIGE CUAL VECTOR QUIERES VER !!!" +
+                "\nA.Escribe la letra 'A' si quieres ver el vector A." +
+                "\nB.Escribe la letra 'B' si quieres ver el vector B." +
+                "\nC.Escribe la letra 'C' si quieres ver el vector C." +
+                "\nD.Mostrar(los vectores juntos A, B, o C)" +
+                "\nE.Regresar al menu principal....\n\n");
+        }
             menu();
             opcion = int.Parse(Console.ReadLine());
 
@@ -101,8 +261,38 @@ namespace ConsoleApp1
                             Console.Write("\n\n\n\n");
                             menu();
                             opcion = int.Parse(Console.ReadLine());
-                        }
+                        }   
                     } while (opcion == 3 || opcion == 4);
+                }
+                if (opcion == 5)
+                {
+                    menu2();
+                    letra = Console.ReadLine();
+                    letra2 = letra.ToUpper();
+                    do
+                    {
+                        switch (letra2)
+                        {
+                            case "A":
+                                for (int i = 0; i < tamaño; i++)
+                                {
+                                    Console.Write(A[i] + " ");
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    } while (letra2=="A"|| letra2 == "B"|| letra2 == "C"|| letra2 == "D");
+                    menu();
+                    A = vertorRandom(tamaño);
+                    Console.Write("El arreglo 'A' ya se creo, Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(A[i] + " ");
+                    }
+                    Console.Write("\n\n\n\n");
+                    menu();
+                    opcion = int.Parse(Console.ReadLine());
                 }
             } while (opcion == 1|| opcion == 2|| opcion == 5|| opcion == 6);
         }
@@ -527,6 +717,146 @@ namespace ConsoleApp1
             finally
             {
                 Console.WriteLine("ESTE MENSAJE SE MOSTRARA SIEMPRE COMO PRUEBA");
+            }
+        }
+        public static void AhorInt()
+        {
+            string[,] matriz = new string[8, 6];
+            string palabra = "null";
+            bool jugar = true;
+            int intentos = 0;
+            string letra = " ";
+            char Letrachar = ' ';
+            string volverjugar = " ";
+            int Gano = 0;
+            int contador = 0; // para saber si la letra que se escrivio si estaba en la palabra
+            while (jugar == true)
+            {
+                palabra = escojerPalabra(palabra);
+                char[] palabravector = palabra.ToCharArray();
+                char[] espaciosEnBlanco = new char[palabra.Length];
+                for (int i = 0; i < palabra.Length; i++) espaciosEnBlanco[i] = '_';
+                Gano = 0;
+                while (intentos <= 6)
+                {
+                    bool letraMayorQueUno = true; // para saber si la letra ingresadda fue solo una y si se puede convertir en char
+                    tablero(matriz, intentos);
+                    MostrarMatriz(matriz);
+                    Console.WriteLine();
+                    MostrarEpaciosEnBlanco(espaciosEnBlanco);
+                    Console.WriteLine();
+                    while (letraMayorQueUno == true)
+                    {
+                        Console.Write("dijite la letra: ");
+                        letra = Console.ReadLine();
+                        if (letra.Length == 1)
+                        {
+                            Letrachar = Convert.ToChar(letra);
+                            letraMayorQueUno = false;
+                        }
+                    }
+
+                    for (int i = 0; i < espaciosEnBlanco.Length; i++)
+                    {
+                        if (Letrachar == espaciosEnBlanco[i])
+                        {
+                            Console.WriteLine("esa letra ya estaba escrivir otra");
+                            Console.ReadKey();
+                            contador++;
+                        }
+                        else
+                        {
+                            if (Letrachar == palabravector[i])
+                            {
+                                espaciosEnBlanco[i] = Letrachar;
+                                contador++;
+                                Gano++;
+                            }
+                        }
+                    }
+                    if (contador == 0)
+                    {
+                        intentos++;
+                    }
+                    if (Gano == palabra.Length) break;
+                    else contador = 0;
+                }
+                if (Gano == palabra.Length)
+                {
+                    tablero(matriz, intentos);
+                    MostrarMatriz(matriz);
+                    Console.WriteLine();
+                    MostrarEpaciosEnBlanco(espaciosEnBlanco);
+                    Console.WriteLine();
+                    Console.WriteLine("Si la palabra era {0} ganaste!! quieres volver a jugar : S / N", palabra);
+                    volverjugar = Console.ReadLine();
+                    if (volverjugar == "n") jugar = false;
+                    else intentos = 0;
+
+                }
+                else
+                {
+                    Console.WriteLine("se te acabaron los intentos la palabra era {0} quieres juegar de nuevo : S /  N", palabra);
+                    volverjugar = Console.ReadLine();
+                    if (volverjugar == "n") jugar = false;
+
+                    else intentos = 0;
+                }
+
+            }
+            static void MostrarEpaciosEnBlanco(char[] Espacios)
+            {
+                for (int i = 0; i < Espacios.Length; i++)
+                {
+                    Console.Write(Espacios[i] + " ");
+                }
+            }
+            static string[,] tablero(string[,] matriz, int intentos)
+            {
+                Console.Clear();
+                for (int i = 0; i < matriz.GetLength(0); i++)
+                {
+                    for (int k = 0; k < matriz.GetLength(1); k++)
+                    {
+                        matriz[i, k] = " ";
+                    }
+                }
+                for (int i = 0; i < 6; i++) matriz[0, i] = "_";
+                for (int k = 1; k < 7; k++) matriz[k, 1] = "|";
+                for (int j = 0; j < 6; j++) matriz[7, j] = "_";
+                if (intentos >= 1) matriz[3, 4] = "O";
+                if (intentos >= 2) matriz[4, 4] = "|";
+                if (intentos >= 3) matriz[5, 3] = "/";
+                if (intentos >= 4) matriz[5, 5] = "l";
+                if (intentos >= 5) matriz[4, 3] = "-";
+                if (intentos >= 6) matriz[4, 5] = "-";
+                matriz[1, 4] = "|";
+                matriz[2, 4] = "|";
+                return matriz;
+            }
+            static void MostrarMatriz(string[,] matriz)
+            {
+                int pasarcolumnna = 0;
+                int pasarfila = 0;
+                while (pasarfila <= 7)
+                {
+                    while (pasarcolumnna <= 5)
+                    {
+                        Console.Write(matriz[pasarfila, pasarcolumnna]);
+                        pasarcolumnna++;
+                        if (pasarcolumnna > 5) Console.WriteLine();
+                    }
+                    pasarcolumnna = 0;
+                    pasarfila++;
+                }
+
+            }
+            static string escojerPalabra(string palabra)
+            {
+                string[] palabras = new string[16] { "camion", "computador", "leche", "vino", "vaca", "mula", "lis", "quiero", "hermoza", "novia", "tarro", "perro", "uva", "internet", "codigo", "programacion" };
+                Random nroaleatorio = new Random();
+                palabra = palabras[nroaleatorio.Next(10)];
+                return palabra;
             }
         }
         public static void mcmTresNumeros()
