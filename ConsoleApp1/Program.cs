@@ -9,46 +9,48 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            JuegoAhorcado();
+            MenuQueOperaArreglos();
             Console.ReadKey();
         }
         public static void JuegoAhorcado()
         {
             bool juegoActivo = true;
-            string palabra = "" ;
+            string palabra = "";
             int vidas = 3;
             string letra = "";
             int correctas = 0;
             int contador = 0;
             char letraPorCaracter = ' ';
             string volverAjugar = "";
+            string[] numeros = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
             mensajeBienvenida();
             while (juegoActivo == true)
             {
                 int contador2 = 1, contador3 = 0;//Contador2 inicia en uno porque es el tamaño del vector de las letras usadas
                 //contador3 es la pocision de las letras usadas
-                char[] matrizLetrasUsadas,valoresUsados= { };//Estas son las matrices para poner las letras usadas
+                char[] matrizLetrasUsadas, valoresUsados = { };//Estas son las matrices para poner las letras usadas
                 valoresUsados = new char[20];//Creo la matriz valoresUsados con 20 posiciones
                 palabra = PalabraAleatoria(palabra);
                 char[] PalabraEnVector = palabra.ToCharArray();
                 LimpiarPantalla();
                 char[] EspaciosConGuiones = new char[palabra.Length];
                 for (int i = 0; i < palabra.Length; i++)//Este for rellena el vector con '_' y deja un espacio entre ellos
-                    if (palabra[i]==' ')
+                    if (palabra[i] == ' ')
                     {
                         EspaciosConGuiones[i] = ' ';
                     }
                     else
-                    EspaciosConGuiones[i] = '_';
+                        EspaciosConGuiones[i] = '_';
                 correctas = 0;
                 //Momento repetitivo while
                 while (vidas >= 1)//Mientras las vidas sean mayores o iguales a uno
                 {
                     matrizLetrasUsadas = new char[contador2];//se crea la matriz donde se pontran las letras usadas
                     bool siLaLetraEsMayorAuno = true;//Este valor cambiara cuando el usuario introdusca mas de un caracter
-                    Console.WriteLine("LETRAS USADAS:                VIDAS ACTUALES: {0}            CORRECTAS: {1}",vidas,correctas);
+                    Console.WriteLine("LETRAS USADAS:                VIDAS ACTUALES: {0}            CORRECTAS: {1}", vidas, correctas);
                     for (int i = 0; i < contador3; i++) //Marcador de informacion de las letras usadas
                     {
+
                         matrizLetrasUsadas[i] = valoresUsados[i];
                         Console.WriteLine("Letra numero {0} ", i + "= " + "'" + matrizLetrasUsadas[i] + "'");
                     }
@@ -61,11 +63,24 @@ namespace ConsoleApp1
                         Console.Write("Escribe una letra: ");
                         letra = Console.ReadLine();
                         LimpiarPantalla();
+                        for (int i = 0; i < numeros.Length; i++)
+                        {
+                            //letraPorCaracter = Convert.ToChar(letra);//Se guarda en letrasPorCaracter
+                            if (letra == numeros[i])
+                            {
+                                Console.WriteLine("!!!No puedes usar numeros solo letras¡¡¡ (Pon un espacio para continuar)");
+                                VolverAempezarWhile(siLaLetraEsMayorAuno);
+                            }
+                        }
+                        if (letra == "" || letra == "")
+                        {
+                            Console.WriteLine("!!!No escribio nada¡¡¡ (Pon un espacio para continuar)");
+                            VolverAempezarWhile(siLaLetraEsMayorAuno);
+                        }
                         if (letra.Length > 1)//si el usuario introduce mas de un caracter, sale un mensaje de error
                         {
                             Console.WriteLine("!!!Solo debes poner una letra a la vez intenta denuevo¡¡¡ (Pon un espacio para continuar)");
-                            Console.ReadKey();
-                            siLaLetraEsMayorAuno = false;//Se deja de ejecutar el while
+                            VolverAempezarWhile(siLaLetraEsMayorAuno);
                         }
                         else//Si introdujo un caracter (una letra) 
                         {
@@ -98,7 +113,7 @@ namespace ConsoleApp1
                     }
                     if (correctas == palabra.Length) //Si la cantidad de correctas es la cantidad de letras que hay en la palabra
                         break; //No hacer nada
-                    else 
+                    else
                         contador = 0;//Pero ponerme el valor de contador en cero para continuar jugando
                     contador2++;
                     contador3++;
@@ -109,18 +124,18 @@ namespace ConsoleApp1
                     Console.WriteLine();//Ganastes el juego
                     Console.WriteLine("Lo lograste la palabra es {0} ganaste!! quieres volver a jugar : S / N", palabra);
                     volverAjugar = Console.ReadLine();
-                    if (volverAjugar == "n" || volverAjugar == "N") 
+                    if (volverAjugar == "n" || volverAjugar == "N")
                         juegoActivo = false;
-                    else 
+                    else
                         vidas = 3;//Si el usuario dice que si vidas es igual a 3 y el while reinicia
                 }
                 else
                 {
                     Console.WriteLine("Ya no tines mas intentos el juego TERMINO la palabra era {0} quieres juegar de nuevo : S /  N", palabra);
                     volverAjugar = Console.ReadLine();
-                    if (volverAjugar == "n" || volverAjugar == "N") 
+                    if (volverAjugar == "n" || volverAjugar == "N")
                         juegoActivo = false;
-                    else 
+                    else
                         vidas = 3;//Si el usuario dice que si vidas es igual a 3 y el while reinicia
                 }
             }
@@ -152,16 +167,12 @@ namespace ConsoleApp1
                     Console.Write(Espacios[i] + " ");
                 }
             }//Modulo que pones los espacios en blanco entre guines
+            static void VolverAempezarWhile(bool siLaLetraEsMayorAuno)
+            {
+                Console.ReadKey();
+                siLaLetraEsMayorAuno = true;//Se deja de ejecutar el while
+            }//Modulo para volver a empesar el while de la validacion de la letra
         }
-
-
-
-
-
-
-
-
-        
         public static void MenuQueOperaArreglos()
         {
             string letra,letra2;
@@ -170,95 +181,47 @@ namespace ConsoleApp1
             Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
             Console.Write("\nIndique el Tamaño de los arreglos en general: ");
             tamaño = int.Parse(Console.ReadLine());
-            static void menu()
-            {
-                Console.Write("\n1. Llenar Vector A de manera aleatoria." +
-                "\n2.Llenar Vector B de manera aleatoria." +
-                "\n3.Realizar C = A + B." +
-                "\n4.Realizar C = B - A." +
-                "\n5.Mostrar(Permitiendo al usuario elegir entre el Vector A, B, o C)." +
-                "\n6.Salir.\n\n" +
-                "\nQue opcion eliges ? ..... ");  
-            }
-            static void menu2()
-            {
-                Console.Write("\nELIGE CUAL VECTOR QUIERES VER !!!" +
-                "\nA.Escribe la letra 'A' si quieres ver el vector A." +
-                "\nB.Escribe la letra 'B' si quieres ver el vector B." +
-                "\nC.Escribe la letra 'C' si quieres ver el vector C." +
-                "\nD.Mostrar(los vectores juntos A, B, o C)" +
-                "\nE.Regresar al menu principal....\n\n");
-        }
+            
             menu();
             opcion = int.Parse(Console.ReadLine());
-
-            static int[] vertorRandom(int tamaño)
-            {
-                int[] Vect = new int[tamaño];
-                for (int i = 0; i < tamaño; i++)
-                {
-                    Random rnd = new Random();
-                    int NumerosAleatorios = rnd.Next(-100, 100);
-                    Vect[i] = NumerosAleatorios;
-                }
-                return Vect;
-            }
             do
             {
                 if (opcion == 1)
                 {
+                    Console.Clear();
+                    string letra3 = "A";
                     A = vertorRandom(tamaño);
-                    Console.Write("El arreglo 'A' ya se creo, Queda asi: ");
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Console.Write(A[i] + " ");
-                    }
-                    Console.Write("\n\n\n\n");
+                    asignarLetraAlVector(A, letra3, tamaño);                  
                     menu();
                     opcion = int.Parse(Console.ReadLine());
                 }
                 if (opcion == 2)
                 {
+                    Console.Clear();
+                    string letra3 = "B";
                     B = vertorRandom(tamaño);
-                    Console.Write("El arreglo 'B' ya se creo, Queda asi: ");
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Console.Write(B[i] + " ");
-                    }
-                    Console.Write("\n\n\n\n");
+                    asignarLetraAlVector(B, letra3, tamaño);
                     menu();
                     opcion = int.Parse(Console.ReadLine());
                     do
                     {
                         if (opcion == 3)
                         {
+                            Console.Clear();
+                            letra3 = "C";
+                            string operador = "+";
                             C = new int[tamaño];
-                            for (int i = 0; i < tamaño; i++)
-                            {
-                                C[i] = A[i] + B[i];
-                            }
-                            Console.Write("El arreglo 'C' = 'A' + 'B' ya se creo, Queda asi: ");
-                            for (int i = 0; i < tamaño; i++)
-                            {
-                                Console.Write(C[i] + " ");
-                            }
-                            Console.Write("\n\n\n\n");
+                            sumaYimpresionVectorC(A, B, C, operador, letra3, tamaño);
                             menu();
                             opcion = int.Parse(Console.ReadLine());
                         }
                         if (opcion == 4)
                         {
+                            Console.Clear();
+                            letra3 = "C";
+                            string operador = "-";
                             C = new int[tamaño];
-                            for (int i = 0; i < tamaño; i++)
-                            {
-                                C[i] = A[i] - B[i];
-                            }
-                            Console.Write("El arreglo 'C' = 'A' - 'B' ya se creo, Queda asi: ");
-                            for (int i = 0; i < tamaño; i++)
-                            {
-                                Console.Write(C[i] + " ");
-                            }
-                            Console.Write("\n\n\n\n");
+                            sumaYimpresionVectorC(A, B, C, operador, letra3, tamaño);
                             menu();
                             opcion = int.Parse(Console.ReadLine());
                         }   
@@ -274,27 +237,138 @@ namespace ConsoleApp1
                         switch (letra2)
                         {
                             case "A":
-                                for (int i = 0; i < tamaño; i++)
-                                {
-                                    Console.Write(A[i] + " ");
-                                }
+                                Console.Clear();
+                                Console.WriteLine("Vector A");
+                                MostarVectores(A, tamaño);
+                                Console.WriteLine("\n\n");
+                                menu2();
+                                letra = Console.ReadLine();
+                                letra2 = letra.ToUpper();
+                                break;
+                            case "B":
+                                Console.Clear();
+                                Console.WriteLine("Vector B");
+                                MostarVectores(B, tamaño);
+                                Console.WriteLine("\n\n");
+                                menu2();
+                                letra = Console.ReadLine();
+                                letra2 = letra.ToUpper();
+                                break;
+                            case "C":
+                                Console.Clear();
+                                Console.WriteLine("Vector C");
+                                MostarVectores(C, tamaño);
+                                Console.WriteLine("\n\n");
+                                menu2();
+                                letra = Console.ReadLine();
+                                letra2 = letra.ToUpper();
+                                break;
+                            case "D":
+                                Console.Clear();
+                                Console.WriteLine("Vector A");
+                                MostarVectores(A, tamaño);
+                                Console.WriteLine("\n\nVector B");
+                                MostarVectores(B, tamaño);
+                                Console.WriteLine("\n\nVector C");
+                                MostarVectores(C, tamaño);
+                                Console.WriteLine("\n\n");
+                                menu2();
+                                letra = Console.ReadLine();
+                                letra2 = letra.ToUpper();
+                                break;
+                            case "E":
+                               
+                                Console.Clear();
+                                menu();
+                                opcion = int.Parse(Console.ReadLine());
                                 break;
                             default:
                                 break;
                         }
                     } while (letra2=="A"|| letra2 == "B"|| letra2 == "C"|| letra2 == "D");
-                    menu();
-                    A = vertorRandom(tamaño);
-                    Console.Write("El arreglo 'A' ya se creo, Queda asi: ");
-                    for (int i = 0; i < tamaño; i++)
-                    {
-                        Console.Write(A[i] + " ");
-                    }
-                    Console.Write("\n\n\n\n");
-                    menu();
-                    opcion = int.Parse(Console.ReadLine());
+                    
+                }
+                if (opcion==6)
+                {
+                    Environment.Exit(0);
                 }
             } while (opcion == 1|| opcion == 2|| opcion == 5|| opcion == 6);
+            static void menu()
+            {
+                Console.Write("ESCOGE UNA OPCION************" +
+                "\n1. Llenar Vector A de manera aleatoria." +
+                "\n2.Llenar Vector B de manera aleatoria." +
+                "\n3.Realizar C = A + B." +
+                "\n4.Realizar C = B - A." +
+                "\n5.Mostrar(Permitiendo al usuario elegir entre el Vector A, B, o C)." +
+                "\n6.Salir.\n\n" +
+                "\nQue opcion eliges ? ..... ");
+            }
+            static void menu2()
+            {
+                Console.Write("\nELIGE CUAL VECTOR QUIERES VER !!!" +
+                "\nA.Escribe la letra 'A' si quieres ver el vector A." +
+                "\nB.Escribe la letra 'B' si quieres ver el vector B." +
+                "\nC.Escribe la letra 'C' si quieres ver el vector C." +
+                "\nD.Mostrar(los vectores juntos A, B, o C)" +
+                "\nE.Regresar al menu principal....\n\n");
+            }
+            static int[] vertorRandom(int tamaño)
+            {
+                int[] Vect = new int[tamaño];
+                for (int i = 0; i < tamaño; i++)
+                {
+                    Random rnd = new Random();
+                    int NumerosAleatorios = rnd.Next(-100, 100);
+                    Vect[i] = NumerosAleatorios;
+                }
+                return Vect;
+            }
+            static void asignarLetraAlVector(int[] A,string letra,int tamaño)
+            {
+                Console.Write($"El arreglo '{letra}' ya se creo, Queda asi: ");
+                for (int i = 0; i < tamaño; i++)
+                {
+                    Console.Write(A[i] + " ");
+                }
+                Console.Write("\n\n\n\n");
+            }
+            static void sumaYimpresionVectorC(int[] A,int[] B,int[] C,string operador,string letra,int tamaño)
+            {
+                if (operador == "+")
+                {
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        C[i] = A[i] + B[i];
+                    }
+                    Console.Write($"El arreglo '{letra}' = 'A' + 'B' ya se creo, Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(C[i] + " ");
+                    }
+                    Console.Write("\n\n\n\n");
+                }
+                if (operador == "-")
+                {
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        C[i] = A[i] - B[i];
+                    }
+                    Console.Write($"El arreglo '{letra}' = 'A' - 'B' ya se creo, Queda asi: ");
+                    for (int i = 0; i < tamaño; i++)
+                    {
+                        Console.Write(C[i] + " ");
+                    }
+                    Console.Write("\n\n\n\n");
+                }
+            }
+            static void MostarVectores(int[] vector,int tamaño)
+            {
+                for (int i = 0; i < tamaño; i++)
+                {
+                    Console.Write(vector[i] + " ");
+                }
+            }
         }
         public static void CreacionDEarreglosConMultiplos(int tamaño, int numeroM, int[] miarreglo)
         {
