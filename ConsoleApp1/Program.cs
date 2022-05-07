@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+
 
 namespace ConsoleApp1
 {
@@ -9,9 +11,109 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            MenuQueOperaArreglos();
+            ELBiologo();
             Console.ReadKey();
         }
+
+        public static void ELBiologo()
+        {
+            //string ADN1 = "ctgactga";
+            //string ADN2 = "actgagc";
+            //string ADN1 = "cgtaattgcgat";
+            //string ADN2 = "cgtacagtagc";
+            string ADN1 = "ctgggccttgaggaaaactg";
+            string ADN2 = "gtaccagtactgatagt";
+            string mayor = "",menor="";
+            string analizar = "";
+            char[] salida = { };
+            int contador = 1;
+            bool encontrado = true;
+            ArrayList cadenasEncontradas;
+            cadenasEncontradas = new ArrayList();
+            if (ADN1.Length>ADN2.Length)
+            {
+                mayor = ADN1;
+                menor = ADN2;
+            }  
+            else
+            {
+                mayor = ADN2;
+                menor = ADN1;
+            }
+            do
+            {
+                for (int i = 0; i < menor.Length; i++)
+                {
+                    char[] comparacion = new char[contador];
+                    if (contador!=1)
+                    {
+                        for (int j = 0; j < contador-1; j++)
+                        {
+                            comparacion[j] = analizar[j];
+                        }
+                    }
+                    comparacion[i] = menor[i];
+                    analizar = new string(comparacion);
+                    if (encontrado == mayor.Contains(analizar))
+                    {
+                        Console.WriteLine(analizar);
+                        cadenasEncontradas.Add(analizar);
+                    }
+                    contador++;
+                }
+                
+            } while (contador==menor.Length);
+
+            Console.WriteLine("hoal");
+            for (int p = 0; p < cadenasEncontradas.Count; p++)
+            {
+                analizar = (string)cadenasEncontradas[p];
+                cadenasEncontradas[p] = analizar;
+                Console.WriteLine(cadenasEncontradas[p]);
+            }
+            
+            
+            
+        }
+
+        /*
+         * public void verSiHayComas(string textoPantalla)
+        {
+            char[] punto1 = { ',' };
+            for (int i = 0; i < textoPantalla.Length; i++)//El for se repite segun el largo del string en pantalla
+            {
+                int a = textoPantalla[i];//Variable 'a' toma los valores del string por cada vuelta
+                int c = 0;//Varible 'c' inica en cero para el sigiente for
+                for (int p = c; p < punto1.Length; p++)//Este for realiza la segunda reviciòn para comparar
+                {
+                    int b = punto1[p];//Da el valor de coma ','
+                    if (a == b)//Cuando son repetidos los puntos se bloquea
+                        PuntoRepetido = true;//No pone nada
+                }
+            }
+        }//Modulo que identifica si hay mas de una coma en pantalla
+
+        char[] arrayenchar = { 'g', 'a', 'x' };
+            string textojunto = new string(arrayenchar);
+            Console.WriteLine(textojunto);
+            string Frase = "hola a todos";
+            char[] llenar = new char[Frase.Length];
+            for (int i = 0; i < Frase.Length; i++)
+            {
+                llenar[i] = Frase[i];
+                //llenar[i] = Char.ToString(Frase[i]);
+                //string frasecompleta = new string(Frase);
+                //Console.WriteLine(frasecompleta);
+                //llenar[i] = Char.ToString(Frase[i]);
+                
+            }
+            string lista = new string(llenar);
+            Console.WriteLine(lista);
+        */
+
+
+
+
         public static void JuegoAhorcado()
         {
             bool juegoActivo = true;
