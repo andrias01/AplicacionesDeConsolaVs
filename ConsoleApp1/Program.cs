@@ -14,7 +14,70 @@ namespace ConsoleApp1
             ELBiologo();
             Console.ReadKey();
         }
-
+        
+        public static string CadenaMasGrandeBiologist(string ADN1, string ADN2)
+        {
+            /*
+             * bool iniciarJuego = true;
+            do
+            {
+                Console.Clear();
+                string volverAjugar;
+                Console.Write("\n***************BIENVENIDO A LA APLICACIÓN EL BIOLOGO***************\n" +
+                "\n************REGLAS DEL JUEGO************" +
+                "\n***1.Eres un biólogo que examina secuencias de ADN de formas de vida diferentes. ***" +
+                "\n***Debes escribir dos secuencias de ADN, y el objetivo es encontrar el conjunto ***" +
+                "\n***ordenado de bases adyacentes de mayor tamaño que es común en ambos ADNs.***\n" +
+                "\n***2.Las secuencias de ADN se darán como conjuntos ordenados de bases de nucleótidos: adenina (abreviado A), citosina (C), guanina (G) y timina (T)***\n" +
+                "\n***ATGTCTTCCTCGA TGCTTCCTATGAC***" +
+                "\n-------Para el ejemplo anterior, el resultado es CTTCCT porque que es el conjunto ordenado de bases adyacentes de mayor tamaño que se encuentra en ambas formas de vida.-------   \n\n");
+                Console.WriteLine("**EMPECEMOS**\n");
+                Console.WriteLine("__Ingresa la primer cadena__");
+                string ADN1 = Console.ReadLine();
+                Console.WriteLine("__Ingresa la segunda cadena__");
+                string ADN2 = Console.ReadLine();
+                Console.WriteLine("__La cadena encontrada mas grande es: __");
+                Console.WriteLine(CadenaMasGrandeBiologist(ADN1,ADN2));
+                //string ADN1 = "ctgggccttgaggaaaactg";
+                //string ADN2 = "gtaccagtactgatagt";
+                Console.WriteLine("Quieres juegar de nuevo : S /  N");
+                volverAjugar = Console.ReadLine();
+                 if (volverAjugar == "n" || volverAjugar == "N") iniciarJuego = false;
+            } while (iniciarJuego == true);
+            */
+            string mayor = "", menor = "";
+            if (ADN1.Length > ADN2.Length)
+            {
+                mayor = ADN1;
+                menor = ADN2;
+            }
+            else
+            {
+                mayor = ADN2;
+                menor = ADN1;
+            }
+            int Empezar = 0;
+            int Maximo = 0;
+            for (int i = 0; i < menor.Length; i++)
+            {
+                for (int j = 0; j < mayor.Length; j++)
+                {
+                    int posicionAnterior = 0;
+                    while (menor[i + posicionAnterior] == mayor[j + posicionAnterior])
+                    {
+                        posicionAnterior++;
+                        if ((i + posicionAnterior >= menor.Length) || (j + posicionAnterior >= mayor.Length)) break;
+                    }
+                    if (posicionAnterior > Maximo)
+                    {
+                        Maximo = posicionAnterior;
+                        Empezar = i;
+                    }
+                }
+            }
+            return menor.Substring(Empezar, Maximo);
+        }
+        
         public static void ELBiologo()
         {
             //string ADN1 = "ctgactga";
