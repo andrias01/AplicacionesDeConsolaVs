@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 
 namespace ConsoleApp1
@@ -19,17 +21,20 @@ namespace ConsoleApp1
         {
             //string ADN1 = "ctgactga";
             //string ADN2 = "actgagc";
-            //string ADN1 = "cgtaattgcgat";
-            //string ADN2 = "cgtacagtagc";
-            string ADN1 = "ctgggccttgaggaaaactg";
-            string ADN2 = "gtaccagtactgatagt";
+            string ADN1 = "cgtaattgcgat";
+            string ADN2 = "cgtacagtagc";
+            //string ADN1 = "ctgggccttgaggaaaactg";
+            //string ADN2 = "gtaccagtactgatagt";
             string mayor = "",menor="";
+            int Nmayor = 0;
             string analizar = "";
             char[] salida = { };
             int contador = 1;
             bool encontrado = true;
-            ArrayList cadenasEncontradas;
+            ArrayList cadenasEncontradas,tamañoString;
             cadenasEncontradas = new ArrayList();
+            tamañoString = new ArrayList();
+            Dictionary<int, string> palabras = new Dictionary<int, string>();
             if (ADN1.Length>ADN2.Length)
             {
                 mayor = ADN1;
@@ -45,9 +50,9 @@ namespace ConsoleApp1
                 for (int i = 0; i < menor.Length; i++)
                 {
                     char[] comparacion = new char[contador];
-                    if (contador!=1)
+                    if (contador != 1)
                     {
-                        for (int j = 0; j < contador-1; j++)
+                        for (int j = 0; j < contador - 1; j++)
                         {
                             comparacion[j] = analizar[j];
                         }
@@ -56,13 +61,13 @@ namespace ConsoleApp1
                     analizar = new string(comparacion);
                     if (encontrado == mayor.Contains(analizar))
                     {
-                        Console.WriteLine(analizar);
+                        //Console.WriteLine(analizar);
                         cadenasEncontradas.Add(analizar);
                     }
                     contador++;
                 }
-                
-            } while (contador==menor.Length);
+
+            } while (contador == menor.Length);
 
             Console.WriteLine("hoal");
             for (int p = 0; p < cadenasEncontradas.Count; p++)
@@ -70,10 +75,19 @@ namespace ConsoleApp1
                 analizar = (string)cadenasEncontradas[p];
                 cadenasEncontradas[p] = analizar;
                 Console.WriteLine(cadenasEncontradas[p]);
+                Console.WriteLine(analizar);
+                tamañoString.Add(analizar.Length);
+                palabras.Add(analizar.Length, analizar);
+                
+                
             }
-            
-            
-            
+            foreach (KeyValuePair<int,string> elemento in palabras)
+            {
+                Console.WriteLine("Clave " + elemento.Key + ":" + elemento.Value);
+            }
+
+
+
         }
 
         /*
