@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 
 namespace ConsoleApp1
@@ -13,10 +11,10 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             colores();
-            ELBiologo();
+            JuegoAhorcado();
             Console.ReadKey();
         }
-        
+
         public static string CadenaMasGrandeBiologist(string ADN1, string ADN2)
         {
             /*
@@ -79,30 +77,26 @@ namespace ConsoleApp1
             }
             return menor.Substring(Empezar, Maximo);
         }
-        
         public static void ELBiologo()
         {
             //string ADN1 = "ctgactga";
             //string ADN2 = "actgagc";
-            string ADN1 = "cgtaattgcgat";
-            string ADN2 = "cgtacagtagc";
-            //string ADN1 = "ctgggccttgaggaaaactg";
-            //string ADN2 = "gtaccagtactgatagt";
-            string mayor = "",menor="";
-            int Nmayor = 0;
+            //string ADN1 = "cgtaattgcgat";
+            //string ADN2 = "cgtacagtagc";
+            string ADN1 = "ctgggccttgaggaaaactg";
+            string ADN2 = "gtaccagtactgatagt";
+            string mayor = "", menor = "";
             string analizar = "";
             char[] salida = { };
             int contador = 1;
             bool encontrado = true;
-            ArrayList cadenasEncontradas,tamañoString;
+            ArrayList cadenasEncontradas;
             cadenasEncontradas = new ArrayList();
-            tamañoString = new ArrayList();
-            Dictionary<int, string> palabras = new Dictionary<int, string>();
-            if (ADN1.Length>ADN2.Length)
+            if (ADN1.Length > ADN2.Length)
             {
                 mayor = ADN1;
                 menor = ADN2;
-            }  
+            }
             else
             {
                 mayor = ADN2;
@@ -124,7 +118,7 @@ namespace ConsoleApp1
                     analizar = new string(comparacion);
                     if (encontrado == mayor.Contains(analizar))
                     {
-                        //Console.WriteLine(analizar);
+                        Console.WriteLine(analizar);
                         cadenasEncontradas.Add(analizar);
                     }
                     contador++;
@@ -138,59 +132,11 @@ namespace ConsoleApp1
                 analizar = (string)cadenasEncontradas[p];
                 cadenasEncontradas[p] = analizar;
                 Console.WriteLine(cadenasEncontradas[p]);
-                Console.WriteLine(analizar);
-                tamañoString.Add(analizar.Length);
-                palabras.Add(analizar.Length, analizar);
-                
-                
-            }
-            foreach (KeyValuePair<int,string> elemento in palabras)
-            {
-                Console.WriteLine("Clave " + elemento.Key + ":" + elemento.Value);
             }
 
 
 
         }
-
-        /*
-         * public void verSiHayComas(string textoPantalla)
-        {
-            char[] punto1 = { ',' };
-            for (int i = 0; i < textoPantalla.Length; i++)//El for se repite segun el largo del string en pantalla
-            {
-                int a = textoPantalla[i];//Variable 'a' toma los valores del string por cada vuelta
-                int c = 0;//Varible 'c' inica en cero para el sigiente for
-                for (int p = c; p < punto1.Length; p++)//Este for realiza la segunda reviciòn para comparar
-                {
-                    int b = punto1[p];//Da el valor de coma ','
-                    if (a == b)//Cuando son repetidos los puntos se bloquea
-                        PuntoRepetido = true;//No pone nada
-                }
-            }
-        }//Modulo que identifica si hay mas de una coma en pantalla
-
-        char[] arrayenchar = { 'g', 'a', 'x' };
-            string textojunto = new string(arrayenchar);
-            Console.WriteLine(textojunto);
-            string Frase = "hola a todos";
-            char[] llenar = new char[Frase.Length];
-            for (int i = 0; i < Frase.Length; i++)
-            {
-                llenar[i] = Frase[i];
-                //llenar[i] = Char.ToString(Frase[i]);
-                //string frasecompleta = new string(Frase);
-                //Console.WriteLine(frasecompleta);
-                //llenar[i] = Char.ToString(Frase[i]);
-                
-            }
-            string lista = new string(llenar);
-            Console.WriteLine(lista);
-        */
-
-
-
-
         public static void JuegoAhorcado()
         {
             bool juegoActivo = true;
@@ -354,13 +300,13 @@ namespace ConsoleApp1
         }
         public static void MenuQueOperaArreglos()
         {
-            string letra,letra2;
-            int[] A= { }, B= { }, C= { };
-            int tamaño = 0,opcion=0;
+            string letra, letra2;
+            int[] A = { }, B = { }, C = { };
+            int tamaño = 0, opcion = 0;
             Console.Write("\nPrograma que hace operaciones entre las posiones de los arreglos: ");
             Console.Write("\nIndique el Tamaño de los arreglos en general: ");
             tamaño = int.Parse(Console.ReadLine());
-            
+
             menu();
             opcion = int.Parse(Console.ReadLine());
             do
@@ -370,7 +316,7 @@ namespace ConsoleApp1
                     Console.Clear();
                     string letra3 = "A";
                     A = vertorRandom(tamaño);
-                    asignarLetraAlVector(A, letra3, tamaño);                  
+                    asignarLetraAlVector(A, letra3, tamaño);
                     menu();
                     opcion = int.Parse(Console.ReadLine());
                 }
@@ -403,7 +349,7 @@ namespace ConsoleApp1
                             sumaYimpresionVectorC(A, B, C, operador, letra3, tamaño);
                             menu();
                             opcion = int.Parse(Console.ReadLine());
-                        }   
+                        }
                     } while (opcion == 3 || opcion == 4);
                 }
                 if (opcion == 5)
@@ -456,7 +402,7 @@ namespace ConsoleApp1
                                 letra2 = letra.ToUpper();
                                 break;
                             case "E":
-                               
+
                                 Console.Clear();
                                 menu();
                                 opcion = int.Parse(Console.ReadLine());
@@ -464,14 +410,14 @@ namespace ConsoleApp1
                             default:
                                 break;
                         }
-                    } while (letra2=="A"|| letra2 == "B"|| letra2 == "C"|| letra2 == "D");
-                    
+                    } while (letra2 == "A" || letra2 == "B" || letra2 == "C" || letra2 == "D");
+
                 }
-                if (opcion==6)
+                if (opcion == 6)
                 {
                     Environment.Exit(0);
                 }
-            } while (opcion == 1|| opcion == 2|| opcion == 5|| opcion == 6);
+            } while (opcion == 1 || opcion == 2 || opcion == 5 || opcion == 6);
             static void menu()
             {
                 Console.Write("ESCOGE UNA OPCION************" +
@@ -503,7 +449,7 @@ namespace ConsoleApp1
                 }
                 return Vect;
             }
-            static void asignarLetraAlVector(int[] A,string letra,int tamaño)
+            static void asignarLetraAlVector(int[] A, string letra, int tamaño)
             {
                 Console.Write($"El arreglo '{letra}' ya se creo, Queda asi: ");
                 for (int i = 0; i < tamaño; i++)
@@ -512,7 +458,7 @@ namespace ConsoleApp1
                 }
                 Console.Write("\n\n\n\n");
             }
-            static void sumaYimpresionVectorC(int[] A,int[] B,int[] C,string operador,string letra,int tamaño)
+            static void sumaYimpresionVectorC(int[] A, int[] B, int[] C, string operador, string letra, int tamaño)
             {
                 if (operador == "+")
                 {
@@ -541,7 +487,7 @@ namespace ConsoleApp1
                     Console.Write("\n\n\n\n");
                 }
             }
-            static void MostarVectores(int[] vector,int tamaño)
+            static void MostarVectores(int[] vector, int tamaño)
             {
                 for (int i = 0; i < tamaño; i++)
                 {
@@ -614,7 +560,6 @@ namespace ConsoleApp1
             numero = n1;
             //Metodo para contar las cifras del numero y cantidad es igual a la cantidad de cifras
             cantidad = SumaDesendente(n1);
-
             if (cantidad == 3)
             {
                 p1 = numero % 100;
@@ -778,7 +723,6 @@ namespace ConsoleApp1
             //declarar variables
             int A, B, opcion, resultado;
             //leer datos
-
             Console.WriteLine("MENU:\n" +
                 "1. Suma\n2. Resta\n3. Multiplicaciòn\n4. Diviciòn");
             //nro1 = int.Parse(Console.ReadLine());
@@ -789,31 +733,26 @@ namespace ConsoleApp1
             Console.WriteLine("PON EL SEGUNDO NUMERO");
             B = int.Parse(Console.ReadLine());
             resultado = 0;
-
             switch (opcion)
             {
                 case 1:
                     {
                         resultado = A + B;
-
                         break;
                     }
                 case 2:
                     {
                         resultado = A - B;
-
                         break;
                     }
                 case 3:
                     {
                         resultado = A * B;
-
                         break;
                     }
                 case 4:
                     {
                         resultado = A / B;
-
                         break;
                     }
             }
@@ -1218,12 +1157,12 @@ namespace ConsoleApp1
         }
         public class hola
         {
-            public static void while1al10 ()
+            public static void while1al10()
             {
                 int a, b;
                 a = 1;
                 b = 11;
-                while(a<b)
+                while (a < b)
                 {
                     Console.WriteLine(a);
                     a = a + 1;
@@ -1260,12 +1199,12 @@ namespace ConsoleApp1
             }
             public static void Primeros8pares()
             {
-                for (int i = 2; i <= 16; i=i+2)
+                for (int i = 2; i <= 16; i = i + 2)
                 {
                     int p = 1;
-                    Console.WriteLine("Numero "+p+"es el "+i);
-                    
-                    
+                    Console.WriteLine("Numero " + p + "es el " + i);
+
+
                 }
             }
         }
